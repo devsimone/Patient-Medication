@@ -74,3 +74,43 @@ def test_list_medication_requests_non_empty(client, medication_request):
     assert response.status_code == 200
     assert len(requests) > 0
 
+
+def test_update_medication_request_valid(client, medication_request):
+    response = client.patch(
+        f"/medication-requests/{1}",
+        json={
+            "end_date": "2022-02-01",
+            "frequency": "Once a day",
+            "status": "completed",
+        },
+    )
+
+    data = response.json()
+    assert response.status_code == 200
+    assert data["frequency"] == "Once a day"
+    assert data["status"] == "completed"
+
+
+def test_update_medication_request_invalid(client, medication_request):
+    invalid_request_id = 1
+    response = client.patch(
+        f"/medication-requests/{invalid_request_id}",
+        json={"reason_text": "No longer needed"},
+    )
+
+    data = response.json()
+    assert response.status_code == 200
+    assert data["frequency"] != "No longer needed"
+
+
+def test_update_medication_request_invalid_id(client):
+    invalid_request_id = 21
+    response = client.patch(
+        f"/medication-requests/{invalid_request_id}",
+        json={
+            "end_date": "2020-02-01",
+            "frequency": "Three times a day",
+            "status": "completed",
+        },
+    )
+    assert response.status_code == 404
