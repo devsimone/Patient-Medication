@@ -32,6 +32,16 @@ def create_medication_request(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
 
+@app.get("/medication-requests/", response_model=list[schemas.MedicationRequest])
+def list_medication_requests(
+    skip: int = 0, limit: int = 100, db: Session = Depends(get_db)
+):
+    try:
+        return crud.get_medication_requests(db, skip=skip, limit=limit)
+    except DataError:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+
 if __name__ == "__main__":
     run("app.main:app", host="0.0.0.0", port=8000, reload=False)
 
