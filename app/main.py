@@ -42,6 +42,26 @@ def list_medication_requests(
         raise HTTPException(status_code=400, detail="Invalid input value")
 
 
+@app.patch(
+    "/medication-requests/{request_id}", response_model=schemas.MedicationRequest
+)
+def update_medication_request(
+    request_id: int,
+    request: schemas.MedicationRequestUpdate,
+    db: Session = Depends(get_db),
+):
+    try:
+        db_request = crud.update_medication_request(
+            db=db, request_id=request_id, request=request
+        )
+        if db_request is None:
+            raise HTTPException(status_code=404, detail="Medication request not found")
+        return db_request
+
+    except DataError:
+        raise HTTPException(status_code=400, detail="Invalid input value")
+
+
 if __name__ == "__main__":
     run("app.main:app", host="0.0.0.0", port=8000, reload=False)
 
