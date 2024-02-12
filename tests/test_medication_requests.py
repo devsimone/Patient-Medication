@@ -61,3 +61,16 @@ def test_create_medication_request_invalid_status(
     assert response.status_code == 400
 
 
+def test_list_medication_requests_empty(client):
+    response = client.get("/medication-requests/")
+    assert response.json() == []
+    assert response.status_code == 200
+
+
+def test_list_medication_requests_non_empty(client, medication_request):
+    response = client.get("/medication-requests/")
+    requests = response.json()
+
+    assert response.status_code == 200
+    assert len(requests) > 0
+
