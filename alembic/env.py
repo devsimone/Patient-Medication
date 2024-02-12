@@ -10,11 +10,17 @@ from app.config import settings
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
+# config.set_main_option(
+#     "sqlalchemy.url",
+#     f"{settings.driver_name}://{settings.database_username}:{settings.database_password}@"
+#     f"{settings.database_hostname}:{settings.database_port}/"
+#     f"{settings.database_name}_test"
+# )
 config.set_main_option(
     "sqlalchemy.url",
     f"{settings.driver_name}://{settings.database_username}:{settings.database_password}@"
     f"{settings.database_hostname}:{settings.database_port}/"
-    f"{settings.database_name}_test"
+    f"{settings.database_name}"
 )
 
 # Interpret the config file for Python logging.
