@@ -3,7 +3,7 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.main import app
-from config import settings
+from app.config import settings
 from app.database import get_db
 from app.models import Base, Patient, Clinician, Medication, MedicationRequest
 from datetime import date
