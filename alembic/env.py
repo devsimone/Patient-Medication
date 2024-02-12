@@ -14,7 +14,7 @@ config.set_main_option(
     "sqlalchemy.url",
     f"{settings.driver_name}://{settings.database_username}:{settings.database_password}@"
     f"{settings.database_hostname}:{settings.database_port}/"
-    f"{settings.database_name}"
+    f"{settings.database_name}_test"
 )
 
 # Interpret the config file for Python logging.
